@@ -129,3 +129,12 @@ pytest_test(
         "//sematic/resolvers/tests:fixtures",
     ],
 )
+
+pytest_test(
+    name="test_chip",
+    srcs = ["test_chip.py"],
+    deps = [
+        "//sematic/types/types:chip",
+      
+    ],
+)

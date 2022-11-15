@@ -27,7 +27,7 @@ import {
   Button,
 } from "@mui/material";
 import { OpenInNew } from "@mui/icons-material";
-import {format, isValid, parseISO} from "date-fns";
+import { format, isValid, parseISO } from "date-fns";
 
 const Plot = createPlotlyComponent(Plotly);
 
@@ -269,8 +269,9 @@ function ListValueView(props: ValueViewProps) {
           </TableCell>
           <TableCell>
             {summary} and{" "}
-            {props.valueSummary["length"] - props.valueSummary["summary"].length}{" "}
-             more items.
+            {props.valueSummary["length"] -
+              props.valueSummary["summary"].length}{" "}
+            more items.
           </TableCell>
         </TableRow>
       </TableBody>
@@ -693,14 +694,20 @@ function LinkValueView(props: ValueViewProps) {
 }
 
 function DatetimeValueView(props: ValueViewProps) {
-  const {valueSummary} = props;
-  const date = parseISO(valueSummary)
+  const { valueSummary } = props;
+  const date = parseISO(valueSummary);
 
   if (!valueSummary || !isValid(date)) {
-      return <Alert severity="error">Incorrect date value.</Alert>;
+    return <Alert severity="error">Incorrect date value.</Alert>;
   }
+  return <Typography>{format(date, "LLLL d, yyyy h:mm:ss a xxx")}</Typography>;
+}
+
+function ChipValueView(props: ValueViewProps) {
+  let { values } = props.valueSummary;
+
   return (
-      <Typography>{format(date, "LLLL d, yyyy h:mm:ss a xxx", )}</Typography>
+    <Chip label={values.label} variant={values.variant} size={values.size} />
   );
 }
 
@@ -722,7 +729,8 @@ const TypeComponents: Map<string, ComponentPair> = new Map([
   ["dataclass", { type: DataclassTypeView, value: DataclassValueView }],
   ["Union", { type: UnionTypeView, value: ValueView }],
   ["Link", { type: TypeView, value: LinkValueView }],
-  ["datetime.datetime", {type: TypeView, value: DatetimeValueView}],
+  ["datetime.datetime", { type: TypeView, value: DatetimeValueView }],
+  ["Chip", { type: TypeView, value: ChipValueView }],
   [
     "torch.utils.data.dataloader.DataLoader",
     { type: TypeView, value: TorchDataLoaderValueView },
