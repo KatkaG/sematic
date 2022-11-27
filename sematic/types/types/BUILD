@@ -110,9 +110,3 @@ sematic_py_lib(
     srcs = ["datetime.py"],
     deps = [],
 )
-
-sematic_py_lib(
-    name="chip",
-    srcs = ["chip.py"],
-    deps = [],
-)
