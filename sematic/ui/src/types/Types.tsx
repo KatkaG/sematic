@@ -704,11 +704,8 @@ function DatetimeValueView(props: ValueViewProps) {
 }
 
 function ChipValueView(props: ValueViewProps) {
-  let { values } = props.valueSummary;
-
-  return (
-    <Chip label={values.label} variant={values.variant} size={values.size} />
-  );
+  const { valueSummary } = props;
+  return <Chip label={valueSummary} variant="outlined" />;
 }
 
 type ComponentPair = {
@@ -730,7 +727,7 @@ const TypeComponents: Map<string, ComponentPair> = new Map([
   ["Union", { type: UnionTypeView, value: ValueView }],
   ["Link", { type: TypeView, value: LinkValueView }],
   ["datetime.datetime", { type: TypeView, value: DatetimeValueView }],
-  ["Chip", { type: TypeView, value: ChipValueView }],
+  ["enum.Enum", { type: TypeView, value: ChipValueView }],
   [
     "torch.utils.data.dataloader.DataLoader",
     { type: TypeView, value: TorchDataLoaderValueView },
