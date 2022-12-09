@@ -65,12 +65,16 @@ SEMATIC_API_KEY: <my_prod1_api_key>
 ```
 
 ## Releasing
+
 **Note:** Actually pushing the released wheel can only be done if you have
 access to the PyPi repo, which is limited to employees of Sematic.
 
+We cut releases from the `main` branch, following these steps:
+
 - Bump the version in `wheel_version.bzl`, `sematic/versions.py`,
-  and `helm/sematic/values.yaml`
-- Update `changelog.md` with the new version number
+  `helm/sematic-server/values.yaml`, and `helm/sematic-server/Chart.yaml`
+- Update `changelog.md` with the new version number and any missing change
+  entries
 - Make the bump commit
 - Build the UI:
 ```bash
@@ -116,4 +120,17 @@ $ TAG=v$(python3 sematic/versions.py) make release-server
 ```
 
 Finally, draft the release on GitHub. Add a "What's Changed" section, a
-"Full Changelog" link, and attach the wheel in the assets section.
+"New Contributors" section, a "Full Changelog" link, and attach the wheel in
+the assets section.
+
+### Special Releases
+
+Sometimes we want to cut releases that contain only a subset of changes that
+have been included in the `main` branch since the previous release. In these
+cases, instead of performing the release from the `main` branch, we:
+- create a separate release branch starting from the previous release tag and
+  switch to that branch
+- cherry-pick the commits we want to include
+- follow all the other steps from the [Releasing](#releasing) section
+- switch to the `main` branch, make a commit that contains the previous version
+  increases and reconciles the changelog, and merge a PR with this commit

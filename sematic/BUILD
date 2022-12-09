@@ -8,6 +8,7 @@ sematic_py_lib(
         ":container_images",
         ":resolver",
         ":retry_settings",
+        "//sematic:future_context",
         "//sematic/future_operators:init",
         "//sematic/resolvers:cloud_resolver",
         "//sematic/resolvers:local_resolver",
@@ -41,6 +42,14 @@ sematic_py_lib(
         "//sematic/db/models:resolution",
         "//sematic/db/models:run",
         "//sematic/utils:retry",
+    ],
+)
+
+sematic_py_lib(
+    name = "future_context",
+    srcs = ["future_context.py"],
+    deps = [
+        "//sematic:resolver"
     ],
 )
 
@@ -111,6 +120,7 @@ sematic_py_lib(
         ":abstract_future",
         "//sematic:resolver",
         "//sematic/resolvers:local_resolver",
+        "//sematic/resolvers:resource_requirements",
         "//sematic/resolvers:silent_resolver",
     ],
 )
@@ -138,6 +148,7 @@ sematic_py_lib(
         "boto3",
     ],
     deps = [
+        "//sematic/config:config",
         "//sematic/config:server_settings",
         "//sematic/config:user_settings",
         "//sematic/utils:memoized_property",
